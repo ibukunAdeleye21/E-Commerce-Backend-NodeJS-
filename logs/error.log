@@ -1,0 +1,44 @@
+[2025-08-08 17:55:41] ERROR: Login failed: jwt is not defined
+[2025-08-09 19:10:19] ERROR: Error creating category with files: Cannot read properties of undefined (reading 'path')
+[2025-08-09 19:12:50] ERROR: Error creating category with files: Missing required parameter - file
+[2025-08-09 19:14:52] ERROR: Error creating category with files: Cannot set properties of undefined (setting 'image')
+[2025-08-10 11:02:17] ERROR: Error creating product with files: axios is not defined
+[2025-08-10 11:03:27] ERROR: Error creating product with files: Missing required parameter - file
+[2025-08-10 11:05:03] ERROR: Error creating product with files: Missing required parameter - file
+[2025-08-10 11:08:25] ERROR: Error creating product with files: file is not defined
+[2025-08-10 11:10:40] ERROR: Error creating product with files: product validation failed: category: Path `category` is required.
+[2025-08-10 20:15:46] ERROR: Error deleting product with ID: 6898756592df8b587e455d64
+[2025-08-12 08:53:23] ERROR: Error getting user cart
+[2025-08-12 08:54:31] ERROR: Error getting user cart
+[2025-08-13 15:47:49] ERROR: Error creating order for user: shippingAddress is not defined
+[2025-08-13 15:49:08] ERROR: Error creating order for user: shippingAddress is not defined
+[2025-08-13 17:41:18] ERROR: Error creating order for user: shippingAddress is not defined
+[2025-08-13 17:42:08] ERROR: Error creating order for user: shippingAddress is not defined
+[2025-08-13 17:43:10] ERROR: Error creating order for user: shippingAddress is not defined
+[2025-08-13 17:53:49] ERROR: Error creating order for user: shippingAddress is not defined
+[2025-08-13 18:04:31] ERROR: Error creating order for user: shippingAddress is not defined
+[2025-08-13 18:07:24] ERROR: Error creating order for user: shippingAddress is not defined
+[2025-08-13 18:19:55] ERROR: Error creating order for user: shippingAddress is not defined
+[2025-08-13 18:20:16] ERROR: Error creating order for user: Cannot read properties of undefined (reading '_id')
+[2025-08-13 18:24:48] ERROR: Error creating order for user: shippingAddress is not defined
+[2025-08-13 18:28:06] ERROR: Error creating order for user: shippingAddress is not defined
+[2025-08-13 18:40:49] ERROR: Error creating order for user: shippingAddress is not defined
+[2025-08-13 18:41:35] ERROR: Error creating order for user: shippingAddress is not defined
+[2025-08-13 18:41:48] ERROR: Error creating order for user: shippingAddress is not defined
+[2025-08-16 05:43:41] ERROR: Error creating order for user: generateOrderReference is not defined
+[2025-08-27 20:09:48] ERROR: Error deleting product with ID: 68af520bbc2860646b4a3f87
+[2025-08-27 20:10:32] ERROR: Error deleting product with ID: 68af520bbc2860646b4a3f87
+[2025-08-27 20:11:31] ERROR: Error deleting product with ID: 68af520bbc2860646b4a3f87
+[2025-08-27 20:12:49] ERROR: Error deleting product with ID: 68af520bbc2860646b4a3f87
+[2025-08-28 10:27:52] ERROR: Error getting all categories: getCategories.map is not a function
+[2025-08-28 11:45:38] ERROR: Error creating order for user: productId is not defined
+[2025-08-28 11:52:20] ERROR: Error creating order for user: Cannot read properties of null (reading 'quantity')
+[2025-08-28 11:54:42] ERROR: Error creating order for user: Cannot read properties of null (reading 'quantity')
+[2025-08-28 11:55:56] ERROR: Error creating order for user: Cannot read properties of null (reading 'quantity')
+[2025-08-28 11:56:52] ERROR: Error creating order for user: Cannot read properties of null (reading 'quantity')
+[2025-08-28 11:58:07] ERROR: Error creating order for user: Cannot read properties of null (reading 'quantity')
+[2025-08-28 12:37:19] ERROR: Error creating order for user: Cannot read properties of undefined (reading '_id')
+[2025-08-28 12:39:33] ERROR: Error creating order for user: Cannot read properties of undefined (reading '_id')
+[2025-08-28 12:40:49] ERROR: Error creating order for user: Cannot read properties of undefined (reading '_id')
+[2025-08-28 13:08:08] ERROR: Error getting orders:
+[2025-08-28 13:25:16] ERROR: Error updating order with ID: 68b041e950e20ba5994e151b}
