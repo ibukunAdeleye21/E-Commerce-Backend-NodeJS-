@@ -17,7 +17,10 @@ const createOrder = async (req, res) => {
     if (!mongoose.Types.ObjectId.isValid(cartId))
     {
         logger.warn(`Invalid cartId: ${cartId}`);
-        return res.status(400).json({message: "Invalid cartId"});
+        return res.status(400).json({
+            message: "Invalid cartId", 
+            success: false
+        });
     }
 
     // check if cartId exist in the db
@@ -26,7 +29,10 @@ const createOrder = async (req, res) => {
     if (!isCartIdValid)
     {
         logger.warn(`CartId: ${cartId} does not exist in the db`);
-        return res.status(404).json({message: "Cart does not exist"});
+        return res.status(404).json({
+            message: "Cart does not exist", 
+            success: false
+        });
     }
 
     // Fetch user's cart
@@ -34,7 +40,10 @@ const createOrder = async (req, res) => {
 
     if (!userCart || userCart.items.length === 0) {
         logger.warn(`Cart for user ${userId} is empty or does not exist`);
-        return res.status(404).json({ message: "Cart is empty" });
+        return res.status(404).json({ 
+            message: "Cart is empty", 
+            success: false 
+        });
     }
 
     try {
@@ -63,9 +72,6 @@ const createOrder = async (req, res) => {
         // update the product stock
         logger.debug("Updating the product stock");
 
-        console.log(`UserCart: ${userCart}`);
-        console.log(`CartItems: ${userCart.items}`);
-
         for (const item of userCart.items) {
             const productResponse = await productModel.findById(item.productId._id);
 
@@ -74,7 +80,7 @@ const createOrder = async (req, res) => {
                 continue;
             }
 
-            await productModel.findByIdAndUpdate(item.productId._id, {stock: productResponse.stock - item.quantity}, {new: true});
+            await productModel.findByIdAndUpdate(item.productId._id, {stock: productResponse.stock - item.quantity}, {new: true, runValidators: true});
         }
 
         // Clear the cart after order is placed
@@ -83,35 +89,70 @@ const createOrder = async (req, res) => {
         await userCart.save();
 
         // modify the user table
-        await userModel.findByIdAndUpdate(userId, {$push: {orders: savedOrder._id}}, {new: true});
+        await userModel.findByIdAndUpdate(userId, {$push: {orders: savedOrder._id}}, {new: true, runValidators: true});
 
         logger.info(`Order created for user ${userId} with ID: ${newOrder._id}`);
 
         return res.status(201).json({
             message: "Order placed successfully",
-            orderId: newOrder._id
+            success: true,
+            data: newOrder._id
         });
+
     } catch (error) {
         logger.error(`Error creating order for user: ${error.message}`)
-        return res.status(500).json({message: "Create order failed"})
+        return res.status(500).json({
+            message: "Create order failed", 
+            success: false, 
+            error: error.message
+        })
     }    
 }
 
 const getUserOrders = async (req, res) => {
     logger.debug("Incoming request to get order");
 
+    const { page = 1, limit = 10 } = req.query;
+
     const {userId} = req.user;
 
     try {
-        logger.debug(`Get user with ID: ${userId} orders`);
+        // Convert query params to numbers
+        const pageNumber = parseInt(page, 10) || 1;
+        const limitNumber = parseInt(limit, 10) || 10;
+        const skip = (pageNumber - 1) * limitNumber;
 
-        const getOrders = await orderModel.find({userId});
+        logger.debug(`Get order for user with ID: ${userId}`);
 
-        return res.status(200).json({message: "User orders fetched successfully", success: true, orders: getOrders});
+        const orders = await orderModel
+            .find({userId})
+            .skip(skip)
+            .sort({createdAt: -1})
+            .limit(limitNumber)
+            .lean();
+
+        // Count total orders
+        const totalOrders = await orderModel.countDocuments({userId});
+
+        return res.status(200).json({
+            message: orders.length ? "User orders fetched successfully" : "No order found for user", 
+            success: true, 
+            data: orders,
+            pagination: {
+                totalOrders,
+                currentPage: pageNumber,
+                limit: limitNumber,
+                totalPages: Math.ceil(totalOrders / limitNumber),
+            }
+        });
 
     } catch (error) {
         logger.error(`Error getting user orders ${error.message}`);
-        return res.status(500).json({message: "Get user orders failed"});
+        return res.status(500).json({
+            message: "Get user orders failed", 
+            success: false, 
+            error: error.message
+        });
     }
 }
 
@@ -121,11 +162,14 @@ const getUserOrder = async (req, res) => {
     const {userId} = req.user;
     const {orderId} = req.params;
 
-    // validate orderId
+    // validate orderId 
     if (!mongoose.Types.ObjectId.isValid(orderId))
     {
         logger.warn(`Invalid orderId: ${orderId}`);
-        return res.status(400).json({message: "Invalid orderId"});
+        return res.status(400).json({
+            message: "Invalid orderId", 
+            success: false
+        });
     }
 
     try {
@@ -135,14 +179,25 @@ const getUserOrder = async (req, res) => {
         if (!getOrder)
         {
             logger.warn(`Invalid order with ID: ${orderId}`);
-            return res.status(404).json({message: "Invalid order ID"});
+            return res.status(404).json({
+                message: "Invalid order ID", 
+                success: false
+            });
         }
 
-        return res.status(200).json({message: "User order fetched successfully", success: true, order: getOrder});
+        return res.status(200).json({
+            message: "User order fetched successfully", 
+            success: true, 
+            data: getOrder
+        });
 
     } catch (error) {
         logger.error(`Error getting user order: ${error.message}`);
-        return res.status(500).json({message: "Get user order failed"});
+        return res.status(500).json({
+            message: "Get user order failed", 
+            success: false, 
+            error: error.message
+        });
     }
 }
 

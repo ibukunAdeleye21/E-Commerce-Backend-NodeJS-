@@ -42,3 +42,13 @@
 [2025-08-28 12:40:49] ERROR: Error creating order for user: Cannot read properties of undefined (reading '_id')
 [2025-08-28 13:08:08] ERROR: Error getting orders:
 [2025-08-28 13:25:16] ERROR: Error updating order with ID: 68b041e950e20ba5994e151b}
+[2025-09-04 22:35:01] ERROR: Error creating category with files: category validation failed: image: Path `image` is required.
+[2025-09-05 06:39:24] ERROR: Error updating category with ID: 68ba76a1001aeb71fe55d073
+[2025-09-05 13:03:21] ERROR: Error creating cart:
+[2025-09-05 13:06:52] ERROR: Error creating cart:
+[2025-09-05 13:08:24] ERROR: Error creating cart:
+[2025-09-05 15:43:23] ERROR: Error getting user orders {(intermediate value)}.skip is not a function
+[2025-09-05 15:44:27] ERROR: Error getting user orders {(intermediate value)}.skip is not a function
+[2025-09-05 15:46:51] ERROR: Error getting user orders {(intermediate value)}.sort is not a function
+[2025-09-05 16:02:35] ERROR: Error getting user orders {(intermediate value)}.skip is not a function
+[2025-09-05 16:13:48] ERROR: Error updating order with ID: 68baf6e0aef12dcb2f03a5a8}

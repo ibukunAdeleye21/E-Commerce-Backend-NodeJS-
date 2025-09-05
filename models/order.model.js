@@ -27,7 +27,9 @@ const orderSchema = new mongoose.Schema({
         enum: ["Pending", "Processing", "Shipped", "Delivered"],
         default: "Pending"
     },
-    shippingAddress: String
+    shippingAddress: {
+        type: String
+    },
 }, {timestamps: true});
 
 const orderModel = mongoose.model("order", orderSchema);

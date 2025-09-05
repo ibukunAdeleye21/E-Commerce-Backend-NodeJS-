@@ -19,6 +19,7 @@ const addUser = async (req, res) => {
         logger.warn("Missing email or password in request");
         return res.status(400).json({
             message: "Please provide either of email or password which is missing",
+            success: false
         });
     };
 
@@ -29,6 +30,7 @@ const addUser = async (req, res) => {
         logger.warn(`Email already exists: ${email}`);
         return res.status(409).json({
             message: "The email exist. Please use another email or proceed to sign in",
+            success: false
         });
     };
 
@@ -50,10 +52,18 @@ const addUser = async (req, res) => {
         const savedUser = await newUser.save();
 
         logger.info(`User created successfully with ID: ${savedUser._id}`);
-        return res.status(201).json({ message: "User account created successfully" });
+        return res.status(201).json({ 
+            message: "User account created successfully", 
+            success: true 
+        });
+
     } catch (error) {
         logger.error(`Error creating user: ${error.message}`);
-        return res.status(500).json({ message: "Create user failed" });
+        return res.status(500).json({ 
+            message: "Create user failed", 
+            success: false, 
+            error: error.message 
+        });
     }
 }
 
@@ -64,7 +74,10 @@ const login = async (req, res) => {
     // check if email and password is provided
     if (!email || !password) {
         logger.warn("Missing email or password field");
-        return res.status(400).json({ message: "Email or password is missing. Please provide" });
+        return res.status(400).json({ 
+            message: "Email or password is missing. Please provide", 
+            success: false 
+        });
     }
 
     try {
@@ -74,7 +87,10 @@ const login = async (req, res) => {
 
         if (!user) {
             logger.warn("User with provided email not found");
-            return res.status(404).json({ message: "Invalid email or password" });
+            return res.status(404).json({ 
+                message: "Invalid email or password", 
+                success: false 
+            });
         }
 
         // compare the password
@@ -83,7 +99,10 @@ const login = async (req, res) => {
 
         if (!isPasswordValid) {
             logger.warn("Invalid login attempt: password mismatch");
-            return res.status(401).json({ message: "Invalid email or password" });
+            return res.status(401).json({ 
+                message: "Invalid email or password", 
+                success: false 
+            });
         }
 
         // create a token
@@ -99,10 +118,18 @@ const login = async (req, res) => {
             maxAge: 1000 * 60 * 60,
             secure: true,
             httpOnly: true,
-        }).status(200).json({ message: "Login successful" });
+        }).status(200).json({ 
+            message: "Login successful", 
+            success: true
+        });
+
   } catch (error) {
         logger.error(`Login failed: ${error.message}`);
-        return res.status(500).json({ message: "Login failed. Please try again later." });
+        return res.status(500).json({ 
+            message: "Login failed. Please try again later.", 
+            success: false,
+            error: error.message
+        });
   }
 }
 
@@ -119,7 +146,8 @@ const addAdmin = async (req, res) => {
     if (!email || !password) {
         logger.warn("Missing email or password in request");
         return res.status(400).json({
-        message: "Please provide either of email or password which is missing",
+            message: "Please provide either of email or password which is missing",
+            success: false
         });
     }
 
@@ -130,6 +158,7 @@ const addAdmin = async (req, res) => {
         return res.status(409).json({
         message:
             "The email exist. Please use another email or proceed to sign in",
+            success: false
         });
     }
 
@@ -154,10 +183,18 @@ const addAdmin = async (req, res) => {
         const savedUser = await newUser.save();
 
         logger.info(`Admin created successfully with ID: ${savedUser._id}`);
-        return res.status(201).json({ message: "Admin account created successfully" });
+        return res.status(201).json({ 
+            message: "Admin account created successfully", 
+            success: true 
+        });
+
     } catch (error) {
         logger.error(`Error creating Admin: ${error.message}`);
-        return res.status(500).json({ message: "Create Admin failed" });
+        return res.status(500).json({ 
+            message: "Create Admin failed", 
+            success: false, 
+            error: error.message 
+        });
     }
 }
 

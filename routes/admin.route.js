@@ -13,15 +13,17 @@ const {
     getProducts,
     getProduct,
     getProductsInCategory,
-    getProductInCategory
+    getProductInCategory,
+    getCategories,
+    getCategory
 } = require("../controllers/admin.controller");
 
 const {authorization, authentication} = require("../middlewares/auth.middleware");
 const upload = require("../utils/multer");
 
 // category
-route.get("/admin/categories", authorization)
-route.get("/admin/categories/:categoryId", authorization)  
+route.get("/admin/categories", authorization, getCategories);
+route.get("/admin/categories/:categoryId", authorization, getCategory);  
 
 route.post("/admin/categories", authorization, upload.single("image"), createCategory);
 route.put("/admin/categories/:categoryId", authorization, upload.single("image"), updateCategory);
